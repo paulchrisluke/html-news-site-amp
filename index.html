@@ -1,59 +1,83 @@
-<!DOCTYPE html>
-<html amp lang="en">
+<!doctype html>
+<html ⚡ lang="en">
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
+    <title>amp-render</title>
+    <link rel="canonical" href="https://amp.dev/documentation/examples/components/amp-render/index.html">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-    <link rel="canonical" href="your-canonical-url-here">
-    <title>Your News Site</title>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     <style amp-custom>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-        }
-        .feed-item {
-            border: 1px solid #ccc;
-            margin: 1rem;
-            padding: 1rem;
-        }
-        .feed-item-link {
-            text-decoration: none;
-            color: #333;
-        }
-        .feed-item-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        .feed-item-description {
-            font-size: 1rem;
-        }
+        .news-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .news-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .news-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+  }
+
+  .news-card .description {
+    margin-top: 10px;
+  }
+
+  .news-card .read-more {
+    margin-top: 10px;
+    text-align: right;
+  }
+
+  .news-card a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+  }
     </style>
     <script async src="https://cdn.ampproject.org/v0.js"></script>
-    <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
-</head>
-<body>
-    <header>
-        <h1>Your News Site</h1>
-    </header>
-    <main>
-        <section class="feed">
-            <amp-list width="auto" height="100" layout="fixed-height" src="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.simplecast.com/54nAGcIl">
-                <template type="amp-mustache">
-                    {{#items}}
-                    <article class="feed-item">
-                        <a href="{{link}}" class="feed-item-link">
-                            <h2 class="feed-item-title">{{title}}</h2>
-                            <p class="feed-item-description">{{description}}</p>
-                        </a>
-                    </article>
-                    {{/items}}
-                </template>
-            </amp-list>
-        </section>
-    </main>
-</body>
-</html>
+<!-- ## Setup -->
+<!-- First, you need to import the script for the `amp-render` extension. -->
+    <script async custom-element="amp-render" src="https://cdn.ampproject.org/v0/amp-render-1.0.js"></script>
+<!-- When you use `amp-render`, you'll almost certainly also want to use `amp-mustache`. -->
+   <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+<!-- In the final example on this page, we'll also be using `amp-script`, so we'll import that extension's script as well. -->
+  <script async custom-element="amp-script" src="https://cdn.ampproject.org/v0/amp-script-0.1.js"></script>  
+  <meta name="amp-script-src" content="sha384-k_X2NcMK5F0E7r7qUEIUbcL69wgizYVR_CHPisMc0hRXB7uZ2iCSe0Gu3ek7rGsj">
+  </head>
+  <body>
+<!-- ## Using amp-script -->
+<!-- `amp-render` can also use `amp-script` as a data source. In this example, instead of using the `key` attribute, we fetch the city data with our own JavaScript, then extract the desired sub-object.
+To learn more about fetching data with `amp-script`, see [this `amp-script` example](/documentation/examples/components/amp-script.md#data-source-for-amp-list). -->
+    <div>
+        <amp-render class="sample" src="amp-script:dataFunctions.fetchData" layout="fixed-height" height="full">
+            <template type="amp-mustache">
+              {{#items}}
+              <div class="news-card">
+                <h2>{{title}}</h2>
+                <p>Date: {{pubDate}}</p>
+                <p>Author: {{author}}</p>
+                <div class="description">{{{description}}}</div>
+                <div class="read-more"><a href="{{link}}">Read More</a></div>
+              </div>
+              {{/items}}
+            </template>    
+          </amp-render>
+          <amp-script id="dataFunctions" script="fetch-data-script" nodom></amp-script>
+          <script id="fetch-data-script" type="text/plain" target="amp-script">
+            function fetchData(index) {
+              return fetch('https://api.rss2json.com/v1/api.json?rss_url=https://feeds.simplecast.com/54nAGcIl')
+                .then(resp => resp.json())
+            }
+            exportFunction('fetchData', fetchData);
+          </script>
+    </div>
+</body></html>

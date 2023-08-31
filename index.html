@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html amp lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <link rel="canonical" href="your-canonical-url-here">
+    <title>Your News Site</title>
+    <style amp-custom>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        .feed-item {
+            border: 1px solid #ccc;
+            margin: 1rem;
+            padding: 1rem;
+        }
+        .feed-item-link {
+            text-decoration: none;
+            color: #333;
+        }
+        .feed-item-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .feed-item-description {
+            font-size: 1rem;
+        }
+    </style>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Your News Site</h1>
+    </header>
+    <main>
+        <section class="feed">
+            <amp-list width="auto" height="100" layout="fixed-height" src="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.simplecast.com/54nAGcIl">
+                <template type="amp-mustache">
+                    {{#items}}
+                    <article class="feed-item">
+                        <a href="{{link}}" class="feed-item-link">
+                            <h2 class="feed-item-title">{{title}}</h2>
+                            <p class="feed-item-description">{{description}}</p>
+                        </a>
+                    </article>
+                    {{/items}}
+                </template>
+            </amp-list>
+        </section>
+    </main>
+</body>
+</html>

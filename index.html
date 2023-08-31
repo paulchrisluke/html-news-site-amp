@@ -10,7 +10,6 @@
 
 body {
   width: auto;
-  background: #05001f;
   margin: 0;
   padding: 0;
   margin-left: 20px;
@@ -19,23 +18,20 @@ body {
 }
         .news-card {
     display: flex;
-    background: white;
     flex-direction: column;
-    border: 1px solid #ccc;
+    border-bottom: 1px solid rgb(214, 214, 214);
     padding: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
     line-height: 1.5;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .news-card h2 {
     font-size: 1.5rem;
+    color:#242449;
     font-weight: bolder;
-    letter-spacing: .1rem;
     margin: 0;
   }
 
@@ -47,20 +43,22 @@ body {
 
   .news-card p {
     font-size: 1rem;
+    color: #242424;
     margin: 0;
   }
 
   .news-card .description {
     margin-top: 10px;
+    color:#242424;
   }
 
   .news-card .read-more {
     margin-top: 10px;
-    text-align: right;
+    text-align: left;
   }
 
   .news-card a {
-    color: #007BFF;
+    color: #000;
     text-decoration: none;
     font-weight: bold;
   }
@@ -109,16 +107,7 @@ To learn more about fetching data with `amp-script`, see [this `amp-script` exam
             <template type="amp-mustache">
               {{#items}}
               <article class="news-card">
-                <h3>{{author}} 
-                    <!-- · <amp-date-display
-                    datetime=" {{pubDate}}"
-                    layout="fixed-height"
-                    height="26px">
-                    <template type="amp-mustache">
-                        {{monthNameShort}} {{day}}
-                    </template>
-                </amp-date-display> -->
-            </h3>
+                <h3>{{author}} · {{pubDate}}</h3>
             <h2>{{title}}</h2>
                 <div class="description">{{{description}}}</div>
                 <div class="read-more"><a href="{{link}}">Read More</a></div>
